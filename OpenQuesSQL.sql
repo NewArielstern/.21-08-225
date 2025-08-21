@@ -1,6 +1,5 @@
 ---DROP TABLE television;
 ---DROP TABLE television_smart;
-
 CREATE TABLE television(
 television_id SERIAL PRIMARY KEY,
 catalog_number INTEGER NOT NULL,
@@ -8,9 +7,9 @@ brand_name TEXT NOT NULL,
 model TEXT NOT NULL,
 screen_size TEXT NOT NULL,
 resolution TEXT NOT NULL,
-stock_quantity INTEGER,
-release_year INTEGER CHECK(release_year > 1950),
-price INTEGER NOT NULL
+stock_quantity INTEGER NOT NULL,
+release_year INTEGER NOT NULL CHECK(release_year > 1950),
+price REAL NOT NULL CHECK(price >= 0)
 );
 
 CREATE TABLE television_smart(
@@ -18,7 +17,7 @@ television_id INTEGER PRIMARY KEY,
 FOREIGN KEY(television_id) REFERENCES television(television_id),
 smart_tv BOOLEAN NOT NULL,
 os TEXT CHECK(smart_tv = FALSE OR os IS NOT NULL),
-panel_type TEXT
+panel_type TEXT NOT NULL
 );
 
 INSERT INTO television(catalog_number,brand_name,model,screen_size,resolution,stock_quantity,release_year,price) VALUES
@@ -30,3 +29,4 @@ INSERT INTO television_smart(television_id,smart_tv,os,panel_type) VALUES
 (1,TRUE,'osGoogleTV','OLED'),
 (2,TRUE,'osGoogleTV','QLED'),
 (3,FALSE,NULL,'LED');
+
